@@ -31,6 +31,7 @@ type looper struct {
 	username     string
 	puid         int
 	pgid         int
+	localSubnet  net.IPNet
 	loopLock     sync.Mutex
 	start        chan struct{}
 	running      chan models.LoopStatus
@@ -45,7 +46,7 @@ type looper struct {
 const defaultBackoffTime = 10 * time.Second
 
 func NewLooper(conf Configurator, settings settings.DNS, logger logging.Logger,
-	streamMerger command.StreamMerger, username string, puid, pgid int) Looper {
+	streamMerger command.StreamMerger, username string, puid, pgid int, localSubnet net.IPNet) Looper {
 	return &looper{
 		state: state{
 			status:   constants.Stopped,
@@ -56,6 +57,7 @@ func NewLooper(conf Configurator, settings settings.DNS, logger logging.Logger,
 		username:     username,
 		puid:         puid,
 		pgid:         pgid,
+		localSubnet:  localSubnet,
 		streamMerger: streamMerger,
 		start:        make(chan struct{}),
 		running:      make(chan models.LoopStatus),
@@ -317,7 +319,7 @@ func (l *looper) updateFiles(ctx context.Context) (err error) {
 		return err
 	}
 	settings := l.GetSettings()
-	if err := l.conf.MakeUnboundConf(ctx, settings, l.username, l.puid, l.pgid); err != nil {
+	if err := l.conf.MakeUnboundConf(ctx, settings, l.username, l.puid, l.pgid, l.localSubnet); err != nil {
 		return err
 	}
 	return nil

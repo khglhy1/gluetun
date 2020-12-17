@@ -249,7 +249,8 @@ func _main(background context.Context, buildInfo models.BuildInformation,
 	// wait for updaterLooper.Restart() or its ticket launched with RunRestartTicker
 	go updaterLooper.Run(ctx, wg)
 
-	unboundLooper := dns.NewLooper(dnsConf, allSettings.DNS, logger, streamMerger, nonRootUsername, puid, pgid)
+	unboundLooper := dns.NewLooper(dnsConf, allSettings.DNS, logger,
+		streamMerger, nonRootUsername, puid, pgid, localSubnet)
 	wg.Add(1)
 	// wait for unboundLooper.Restart or its ticker launched with RunRestartTicker
 	go unboundLooper.Run(ctx, wg, signalDNSReady)

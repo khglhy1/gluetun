@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"io/ioutil"
+	"net"
 	"net/http"
 	"sort"
 	"strings"
@@ -15,9 +16,9 @@ import (
 )
 
 func (c *configurator) MakeUnboundConf(ctx context.Context, settings settings.DNS,
-	username string, puid, pgid int) (err error) {
+	username string, puid, pgid int, localSubnet net.IPNet) (err error) {
 	c.logger.Info("generating Unbound configuration")
-	lines, warnings := generateUnboundConf(ctx, settings, username, c.client, c.logger)
+	lines, warnings := generateUnboundConf(ctx, settings, username, c.client, c.logger, localSubnet)
 	for _, warning := range warnings {
 		c.logger.Warn(warning)
 	}
@@ -48,7 +49,7 @@ func (c *configurator) MakeUnboundConf(ctx context.Context, settings settings.DN
 
 // MakeUnboundConf generates an Unbound configuration from the user provided settings.
 func generateUnboundConf(ctx context.Context, settings settings.DNS, username string,
-	client *http.Client, logger logging.Logger) (
+	client *http.Client, logger logging.Logger, localSubnet net.IPNet) (
 	lines []string, warnings []error) {
 	doIPv6 := "no"
 	if settings.IPv6 {
@@ -88,7 +89,8 @@ func generateUnboundConf(ctx context.Context, settings settings.DNS, username st
 		"interface": "0.0.0.0",
 		"port":      "53",
 		// Other
-		"username": fmt.Sprintf("%q", username),
+		"username":       fmt.Sprintf("%q", username),
+		"access-control": fmt.Sprintf("%s allow", localSubnet.String()),
 	}
 
 	// Block lists
