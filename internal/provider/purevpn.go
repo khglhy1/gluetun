@@ -151,5 +151,5 @@ func (p *purevpn) BuildConf(connection models.OpenVPNConnection, verbosity int, 
 func (p *purevpn) PortForward(ctx context.Context, client *http.Client,
 	openFile os.OpenFileFunc, pfLogger logging.Logger, gateway net.IP, fw firewall.Configurator,
 	syncState func(port uint16) (pfFilepath models.Filepath)) {
-	panic("port forwarding is not supported for purevpn")
+	panic(" port forwarding is not supported for purevpn")
 }
