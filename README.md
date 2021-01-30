@@ -36,7 +36,7 @@ Mullvad, Windscribe, Surfshark Cyberghost, VyprVPN, NordVPN, PureVPN and Privado
 
 ## Features
 
-- Based on Alpine 3.12 for a small Docker image of 52MB
+- Based on Alpine 3.13 for a small Docker image of 53MB
 - Supports **Private Internet Access**, **Mullvad**, **Windscribe**, **Surfshark**, **Cyberghost**, **Vyprvpn**, **NordVPN**, **PureVPN** and **Privado** servers
 - Supports Openvpn only for now
 - DNS over TLS baked in with service provider(s) of your choice

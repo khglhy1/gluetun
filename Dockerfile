@@ -1,4 +1,4 @@
-ARG ALPINE_VERSION=3.12
+ARG ALPINE_VERSION=3.13
 ARG GO_VERSION=1.15
 ARG BUILDPLATFORM=linux/amd64
 
@@ -144,9 +144,14 @@ ENV VPNSP=pia \
 ENTRYPOINT ["/entrypoint"]
 EXPOSE 8000/tcp 8888/tcp 8388/tcp 8388/udp
 HEALTHCHECK --interval=5s --timeout=5s --start-period=10s --retries=1 CMD /entrypoint healthcheck
+RUN mv /etc/apk/repositories /etc/apk/repositories.bak && \
+    echo "http://dl-cdn.alpinelinux.org/alpine/v3.12/main" > /etc/apk/repositories && \
+    apk add -q --progress --no-cache --update openvpn=2.4.10-r0 && \
+    rm -rf /var/cache/apk/* && \
+    deluser openvpn && \
+    mv /etc/apk/repositories.bak /etc/apk/repositories
 RUN apk add -q --progress --no-cache --update openvpn ca-certificates iptables ip6tables unbound tzdata && \
     rm -rf /var/cache/apk/* /etc/unbound/* /usr/sbin/unbound-* && \
-    deluser openvpn && \
     deluser unbound && \
     mkdir /gluetun
 # TODO remove once SAN is added to PIA servers certificates, see https://github.com/pia-foss/manual-connections/issues/10
