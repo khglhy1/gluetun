@@ -39,6 +39,11 @@ func Test_versions(t *testing.T) {
 			version: allServers.Cyberghost.Version,
 			digest:  "fd6242bb",
 		},
+		"Fastestvpn": {
+			model:   models.FastestvpnServer{},
+			version: allServers.Fastestvpn.Version,
+			digest:  "8825919b",
+		},
 		"Mullvad": {
 			model:   models.MullvadServer{},
 			version: allServers.Mullvad.Version,
@@ -124,6 +129,11 @@ func Test_timestamps(t *testing.T) {
 			servers:   allServers.Cyberghost.Servers,
 			timestamp: allServers.Cyberghost.Timestamp,
 			digest:    "5d3a8cbf",
+		},
+		"Fastestvpn": {
+			servers:   allServers.Fastestvpn.Version,
+			timestamp: allServers.Fastestvpn.Timestamp,
+			digest:    "da65734a",
 		},
 		"Mullvad": {
 			servers:   allServers.Mullvad.Servers,
