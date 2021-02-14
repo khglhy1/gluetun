@@ -21,6 +21,8 @@ const (
 	Privado = "privado"
 	// Torguard is a VPN provider.
 	Torguard = "torguard"
+	// Fastestvpn is a VPN provider.
+	Fastestvpn = "fastestvpn"
 )
 
 const (

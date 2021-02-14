@@ -122,6 +122,19 @@ func (s *PrivadoServer) String() string {
 		s.Hostname, goStringifyIP(s.IP))
 }
 
+type FastestvpnServer struct {
+	Hostname string   `json:"hostname"`
+	TCP      bool     `json:"tcp"`
+	UDP      bool     `json:"udp"`
+	Country  string   `json:"country"`
+	IPs      []net.IP `json:"ips"`
+}
+
+func (s *FastestvpnServer) String() string {
+	return fmt.Sprintf("{Hostname: %q, UDP: %t, TCP: %t, Country: %q, IPs: %s}",
+		s.Hostname, s.UDP, s.TCP, s.Country, goStringifyIPs(s.IPs))
+}
+
 func goStringifyIP(ip net.IP) string {
 	s := fmt.Sprintf("%#v", ip)
 	s = strings.TrimSuffix(strings.TrimPrefix(s, "net.IP{"), "}")

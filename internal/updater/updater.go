@@ -62,6 +62,16 @@ func (u *updater) UpdateServers(ctx context.Context) (allServers models.AllServe
 		}
 	}
 
+	if u.options.Fastestvpn {
+		u.logger.Info("updating Fastestvpn servers...")
+		if err := u.updateFastestvpn(ctx); err != nil {
+			u.logger.Error(err)
+		}
+		if ctx.Err() != nil {
+			return allServers, ctx.Err()
+		}
+	}
+
 	if u.options.Mullvad {
 		u.logger.Info("updating Mullvad servers...")
 		if err := u.updateMullvad(ctx); err != nil {
