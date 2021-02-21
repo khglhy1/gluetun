@@ -22,6 +22,7 @@ func (s *storage) mergeServers(hardcoded, persisted models.AllServers) models.Al
 		Nordvpn:    s.mergeNordVPN(hardcoded.Nordvpn, persisted.Nordvpn),
 		Pia:        s.mergePIA(hardcoded.Pia, persisted.Pia),
 		Privado:    s.mergePrivado(hardcoded.Privado, persisted.Privado),
+		Privatevpn: s.mergePrivatevpn(hardcoded.Privatevpn, persisted.Privatevpn),
 		Purevpn:    s.mergePureVPN(hardcoded.Purevpn, persisted.Purevpn),
 		Surfshark:  s.mergeSurfshark(hardcoded.Surfshark, persisted.Surfshark),
 		Torguard:   s.mergeTorguard(hardcoded.Torguard, persisted.Torguard),
@@ -85,6 +86,22 @@ func (s *storage) mergePrivado(hardcoded, persisted models.PrivadoServers) model
 		return hardcoded
 	}
 	s.logger.Info("Using Privado servers from file (%s more recent)",
+		getUnixTimeDifference(persisted.Timestamp, hardcoded.Timestamp))
+	return persisted
+}
+
+func (s *storage) mergePrivatevpn(hardcoded, persisted models.PrivatevpnServers) models.PrivatevpnServers {
+	if persisted.Timestamp <= hardcoded.Timestamp {
+		return hardcoded
+	}
+	versionDiff := hardcoded.Version - persisted.Version
+	if versionDiff > 0 {
+		s.logger.Info(
+			"Privatevpn servers from file discarded because they are %d versions behind",
+			versionDiff)
+		return hardcoded
+	}
+	s.logger.Info("Using Privatevpn servers from file (%s more recent)",
 		getUnixTimeDifference(persisted.Timestamp, hardcoded.Timestamp))
 	return persisted
 }

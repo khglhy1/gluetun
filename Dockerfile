@@ -73,7 +73,7 @@ ENV VPNSP=pia \
     PUID= \
     PGID= \
     PUBLICIP_FILE="/tmp/gluetun/ip" \
-    # PIA, Windscribe, Surfshark, Cyberghost, Vyprvpn, NordVPN, PureVPN only
+    # PIA, Windscribe, Surfshark, Cyberghost, Vyprvpn, NordVPN, PureVPN, PrivateVPN only
     OPENVPN_USER= \
     OPENVPN_PASSWORD= \
     USER_SECRETFILE=/run/secrets/openvpn_user \

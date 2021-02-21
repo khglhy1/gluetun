@@ -59,6 +59,11 @@ func Test_versions(t *testing.T) {
 			version: allServers.Privado.Version,
 			digest:  "1d5aeb23",
 		},
+		"Privatevpn": {
+			model:   models.PrivatevpnServer{},
+			version: allServers.Privatevpn.Version,
+			digest:  "cba13d78",
+		},
 		"Purevpn": {
 			model:   models.PurevpnServer{},
 			version: allServers.Purevpn.Version,
@@ -149,6 +154,11 @@ func Test_timestamps(t *testing.T) {
 			servers:   allServers.Privado.Servers,
 			timestamp: allServers.Privado.Timestamp,
 			digest:    "2ac55360",
+		},
+		"Privatevpn": {
+			servers:   allServers.Privatevpn.Servers,
+			timestamp: allServers.Privatevpn.Timestamp,
+			digest:    "8ce3fba1",
 		},
 		"Surfshark": {
 			servers:   allServers.Surfshark.Servers,

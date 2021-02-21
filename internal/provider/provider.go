@@ -45,6 +45,8 @@ func New(provider string, allServers models.AllServers, timeNow timeNowFunc) Pro
 		return newPrivado(allServers.Privado.Servers, timeNow)
 	case constants.Torguard:
 		return newTorguard(allServers.Torguard.Servers, timeNow)
+	case constants.Privatevpn:
+		return newPrivatevpn(allServers.Privatevpn.Servers, timeNow)
 	default:
 		return nil // should never occur
 	}
